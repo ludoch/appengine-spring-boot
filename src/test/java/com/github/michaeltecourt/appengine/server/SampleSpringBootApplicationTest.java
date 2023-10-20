@@ -23,12 +23,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
+import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.AbstractServletWebServerFactory;
+//import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+//import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringRunner;
-
+import org.springframework.test.context.junit4.SpringRunner; 
 import io.restassured.RestAssured;
 
 /**
@@ -47,11 +48,11 @@ public class SampleSpringBootApplicationTest {
     URI aliensUri;
 
     @Autowired
-    private EmbeddedServletContainerFactory container;
+    private AbstractServletWebServerFactory container;
 
     @Test
     public void applicationShouldStartWithEmbeddedJetty() {
-        Assertions.assertThat(container).isInstanceOf(JettyEmbeddedServletContainerFactory.class);
+        Assertions.assertThat(container).isInstanceOf(JettyServletWebServerFactory.class);
     }
 
     /**

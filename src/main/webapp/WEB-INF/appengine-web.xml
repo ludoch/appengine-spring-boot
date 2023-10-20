@@ -4,7 +4,8 @@
     <module>default</module>
     <version>${appengine.app.version}</version>
     <threadsafe>true</threadsafe>
-    <runtime>java8</runtime>
+    <runtime>java21</runtime>
+    <sessions-enabled>true</sessions-enabled>
     <!-- Configure java.util.logging -->
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
