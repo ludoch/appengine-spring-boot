@@ -2,10 +2,11 @@
 
 Sample Google App Engine (standard) application using :
 
- * Java 8 : requires to be among alpha testers of the Java 8 standard runtime
- * Spring Boot 1.5 : the application is packaged as an executable WAR also deployable on servlet containers
+ * Java 21 : 
+ * Spring Boot 3.2 milestone 3 : the application is packaged as an executable WAR also deployable on servlet containers
+ * Jetty12 SpringBoot configuration
+ * Latest AppEngine artifacts build from head for Java 21
  * JSP : just to prove it works, you should probably use another template engine like thymeleaf
- * GWT 2.8.0 : **TODO Just to prove it's still there**
 
 ## How to deploy
 
