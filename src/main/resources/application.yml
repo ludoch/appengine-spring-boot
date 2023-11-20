@@ -12,14 +12,12 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
 
-# Set up security credentials...
-security:
-  user:
-    name: administrator
-    password: M4rSuP1aL-EsTh3T1qUE
-  # ... not used to secure the application...
-  basic:
-    enabled: false
+  # Set up security credentials...
+  security:
+    user:
+      name: administrator
+      password: M4rSuP1aL-EsTh3T1qUE
+      roles: ADMIN
 
 management:
   # ... only for the management endpoints (actuator)
