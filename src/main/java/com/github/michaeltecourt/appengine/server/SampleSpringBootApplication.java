@@ -30,6 +30,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class SampleSpringBootApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
+        // This main method is not used by Google App Engine, which only needs
+        // an empty @SpringBootApplication class from SpringBootServletInitializer.
         SpringApplication.run(SampleSpringBootApplication.class, args);
     }
 

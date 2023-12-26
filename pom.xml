@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-	<version>3.2.0</version>
+	<version>3.2.1</version>
     </parent>
 
     <groupId>com.github.michaeltecourt</groupId>
@@ -41,7 +41,7 @@
         <java.version>17</java.version>
         <appengine.app.id>your-application-id</appengine.app.id>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.sdk.version>2.0.22</appengine.sdk.version>
+        <appengine.sdk.version>2.0.23</appengine.sdk.version>
     </properties>
 
     <dependencyManagement>
@@ -128,27 +128,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <!-- Do not embed Tomcat -->
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-                <!-- Exclude JUL-to-Slf4j in order to see Spring logs in cloud console -->
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>jul-to-slf4j</artifactId>
-                </exclusion>
-                <exclusion>
-                  <groupId>commons-logging</groupId>
-                  <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
