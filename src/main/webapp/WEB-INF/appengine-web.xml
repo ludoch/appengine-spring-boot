@@ -3,7 +3,7 @@
     <application>${appengine.app.id}</application>
     <module>default</module>
     <version>${appengine.app.version}</version>
-    <threadsafe>true</threadsafe>
+    <app-engine-apis>true</app-engine-apis>
     <runtime>java21</runtime>
     <sessions-enabled>true</sessions-enabled>
     <!-- Configure java.util.logging -->
