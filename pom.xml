@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-	<version>3.2.3</version>
+	<version>3.2.5</version>
     </parent>
 
     <groupId>com.github.michaeltecourt</groupId>
@@ -41,7 +41,7 @@
         <java.version>17</java.version>
         <appengine.app.id>your-application-id</appengine.app.id>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.sdk.version>2.0.25</appengine.sdk.version>
+        <appengine.sdk.version>2.0.26</appengine.sdk.version>
     </properties>
 
     <dependencyManagement>
@@ -195,7 +195,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.4.3.Final</version>
+            <version>8.0.1.Final</version>
         </dependency>
     </dependencies>
     <build>
