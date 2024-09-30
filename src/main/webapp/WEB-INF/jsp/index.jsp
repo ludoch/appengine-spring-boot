@@ -35,6 +35,7 @@
 </script>
 </head>
 <body>
-  <h1>Sample Spring Boot Application !</h1>
+  <h1>Sample Spring Boot Application running as an App Engine Java21 Web App.!</h1>
+  This is the index.jsp. Try also the /aliens and /admin handlers.
 </body>
 </html>
