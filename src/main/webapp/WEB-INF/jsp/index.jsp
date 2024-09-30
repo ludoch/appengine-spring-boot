@@ -36,6 +36,19 @@
 </head>
 <body>
   <h1>Sample Spring Boot Application running as an App Engine Java21 Web App.!</h1>
-  This is the index.jsp. Try also the /aliens and /admin handlers.
+  This is the index.jsp. Try also the following urls:
+  <ul>
+      <li><a href="/aliens">/aliens</a></li>
+      <li><a href="/admin">/admin</a></li>
+      <li><a href="/actuator/metrics">actuator/metrics</a></li>
+      <li><a href="actuator/metrics/jvm.memory.max">actuator/metrics/jvm.memory.max</a></li>
+      <li><a href="actuator/health">actuator/health</a></li>
+      <li><a href="actuator/env">actuator/env</a></li>
+      <li><a href="actuator/threaddump">actuator/threaddump</a></li>
+      <li><a href="actuator/loggers">actuator/loggers</a></li>
+      <li><a href="actuator/beans">actuator/beans</a></li>
+      <li><a href="actuator/health">actuator/health</a></li>
+
+  </ul>
 </body>
 </html>
