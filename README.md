@@ -3,10 +3,33 @@
 Sample Google App Engine (standard) application using :
 
  * Java 21 : 
- * Spring Boot 3.2 milestone 3 : the application is packaged as an executable WAR also deployable on servlet containers
+ * Spring Boot 3.3.3 : the application is packaged as an executable WAR also deployable on servlet containers
  * Jetty12 SpringBoot configuration
  * Latest AppEngine artifacts build from head for Java 21
  * JSP : just to prove it works, you should probably use another template engine like thymeleaf
+
+## How to test locally
+
+ ```
+mvn clean package appengine:run
+```
+
+This command above will start the local devappserver and you can see the home page: http://localhost:8080/ that will display these links to test:
+
+```
+Sample Spring Boot Application running as an App Engine Java21 Web App.!
+This is the index.jsp. Try also the following urls:
+/aliens
+/admin
+actuator/metrics
+actuator/metrics/jvm.memory.max
+actuator/health
+actuator/env
+actuator/threaddump
+actuator/loggers
+actuator/beans
+actuator/health
+```
 
 ## How to deploy
 
@@ -17,7 +40,7 @@ If you only have one environment, you can set these properties directly in `pom.
 
 ## What's in there
 
-The home page is dull, it just proves Java 8 + Spring Boot + JSPs work.
+The home page is dull, it just proves Java 21 GAE + Spring Boot + + GAE APIs (datastore) +JSPs work 
 
 You can also hit `/aliens` to see a dumb HTTP API example.
 
