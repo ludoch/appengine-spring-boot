@@ -3,7 +3,7 @@
 Sample Google App Engine (standard) application using :
 
  * Java 21 : 
- * Spring Boot 3.3.5 : the application is packaged as an executable WAR also deployable on servlet containers
+ * Spring Boot 3.4.2 : the application is packaged as an executable WAR also deployable on servlet containers
  * Jetty12 SpringBoot configuration instead of default Tomcat. This way it reuses the Jetty12 provided in AppEngine.
  * Latest AppEngine artifacts for Java 21 runtime
  * JSP : just to prove it works, you should probably use another template engine like thymeleaf
