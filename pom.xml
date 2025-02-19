@@ -42,7 +42,7 @@
         <maven.compiler.proc>full</maven.compiler.proc>
         <appengine.app.id>your-application-id</appengine.app.id>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.sdk.version>2.0.32</appengine.sdk.version>
+        <appengine.sdk.version>2.0.33</appengine.sdk.version>
     </properties>
 
     <dependencyManagement>
