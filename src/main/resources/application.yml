@@ -19,6 +19,11 @@ spring:
       password: M4rSuP1aL-EsTh3T1qUE
       roles: ADMIN
 
+server:
+  error:
+    whitelabel:
+      enabled: false
+    
 management:
   # ... only for the management endpoints (actuator)
   security:
@@ -34,4 +39,4 @@ management:
         include: "*"
   endpoint:
     health:
-      show-details: ALWAYS
+      show-details: ALWAYS   

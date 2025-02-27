@@ -81,7 +81,7 @@ public class Area51Controller {
             Collections.singletonList(Alien.of("userPrincipal", userPrincipal == null ? "null" : userPrincipal.toString()))
         );
     }
-
+    
     @Data
     @AllArgsConstructor(staticName = "of")
     public static class AliensResponse {

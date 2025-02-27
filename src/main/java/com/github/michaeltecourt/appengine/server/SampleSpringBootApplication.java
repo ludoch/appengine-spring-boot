@@ -17,6 +17,7 @@ package com.github.michaeltecourt.appengine.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
@@ -26,6 +27,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * 
  * @author michaeltecourt
  */
+@ServletComponentScan("com.github.michaeltecourt.appengine.server") // Needed to scan extra servlets in this package in this application.
 @SpringBootApplication
 public class SampleSpringBootApplication extends SpringBootServletInitializer {
 

@@ -38,6 +38,7 @@
   <h1>Sample Spring Boot Application running as an App Engine Java21 Web App.!</h1>
   This is the index.jsp. Try also the following urls:
   <ul>
+      <li><a href="/appengine_apis">/appengine_apis which shows an advanced selection of usage for AppEngine APIs.</a></li>
       <li><a href="/aliens">/aliens</a></li>
       <li><a href="/admin">/admin</a></li>
       <li><a href="/actuator/metrics">actuator/metrics</a></li>
