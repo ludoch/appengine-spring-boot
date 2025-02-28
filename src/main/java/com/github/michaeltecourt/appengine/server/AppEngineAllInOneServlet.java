@@ -208,10 +208,11 @@ public class AppEngineAllInOneServlet extends HttpServlet {
     private static void performDefaultpage(PrintWriter w) {
         //   appengine_apis?jmlx_list_vm_options
         w.printf("<h1>Sample Spring Boot Servlet using AppEngine Java APIs on java21</h1>");
-        w.printf("<a href=\"%s\">%s</a> \n",
-                "https://github.com/ludoch/appengine-spring-boot/blob/master/src/main/java/com/github/michaeltecourt/appengine/server/AppEngineAllInOneServlet.java", "this Servlet source code.");
+        w.printf("<a href=\"%s\">%s</a>",
+                "https://github.com/ludoch/appengine-spring-boot/blob/master/src/main/java/com/github/michaeltecourt/appengine/server/AppEngineAllInOneServlet.java",
+                "this Servlet source code.");
 
-        w.printf("<br>This is the AppEngine Servlet page. Try also the following urls:");
+        w.printf("<br>This is the AppEngine Servlet demo page. Try also the following urls:");
 
         w.printf("<ul>");
 
