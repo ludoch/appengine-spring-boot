@@ -6,11 +6,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-	<version>3.4.2</version>
+	<version>3.4.4</version>
     </parent>
 
     <groupId>com.github.michaeltecourt</groupId>
     <artifactId>appengine-spring-boot-ee10</artifactId>
+    <name>->AppEngine Sample Springboot Latest</name>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <inceptionYear>2017</inceptionYear>
@@ -81,7 +82,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>33.4.0-jre</version>
+                <version>33.4.5-jre</version>
             </dependency>
             <!-- Testing -->
             <dependency>
