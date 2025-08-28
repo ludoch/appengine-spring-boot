@@ -24,17 +24,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class WebAppConfiguration {
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((auth) -> auth
-            .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
-            .anyRequest().permitAll()
-        );
+        http
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().permitAll()
+            );
         http.formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
 
         // Require HTTPS. Note doesn't work on DevAppServer over HTTP because done by string not security constraint.
