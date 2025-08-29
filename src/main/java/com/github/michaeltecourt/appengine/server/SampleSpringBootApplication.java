@@ -17,20 +17,18 @@ package com.github.michaeltecourt.appengine.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.server.servlet.context.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
  * Spring Boot application entry point. Because it extends
- * {@link SpringBootServletInitializer} it should be detected without a web.xml
- * file (GAE team is fixing this).
+ * {@link SpringBootServletInitializer} it will be detected without a web.xml
+ * file.
  * 
  * @author michaeltecourt
  */
-@ServletComponentScan("com.github.michaeltecourt.appengine.server") // Needed to scan extra servlets in this package in this application.
 @SpringBootApplication
-public class SampleSpringBootApplication extends SpringBootServletInitializer {
-
+public class SampleSpringBootApplication extends SpringBootServletInitializer
+{
     public static void main(String[] args) {
         // This main method is not used by Google App Engine, which only needs
         // an empty @SpringBootApplication class from SpringBootServletInitializer.
