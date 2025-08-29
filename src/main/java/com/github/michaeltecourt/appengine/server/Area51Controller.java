@@ -15,6 +15,9 @@
  */
 package com.github.michaeltecourt.appengine.server;
 
+import java.io.PrintWriter;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,14 +25,17 @@ import java.util.List;
 import java.util.Objects;
 
 import com.google.appengine.api.datastore.DatastoreService;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,7 +87,49 @@ public class Area51Controller {
             Collections.singletonList(Alien.of("userPrincipal", userPrincipal == null ? "null" : userPrincipal.toString()))
         );
     }
-    
+
+    @RequestMapping(value = "/stacktrace", method = RequestMethod.GET)
+    public void stacktrace(HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        LOGGER.info("Printing the stacktrace...");
+        response.setContentType("text/plain");
+        try (PrintWriter writer = response.getWriter())
+        {
+            new Throwable("Stacktrace from Area51Controller").printStackTrace(writer);
+            writer.flush();
+        }
+    }
+
+    @RequestMapping(value = "/ee11Test", method = RequestMethod.GET)
+    public void ee11Test(HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        LOGGER.info("Testing Servlet 6.1 API...");
+        response.setContentType("text/plain");
+        ServletContext ctx = request.getServletContext();
+
+        try (ServletOutputStream outputStream = response.getOutputStream();)
+        {
+            PrintWriter writer = new PrintWriter(outputStream, false, StandardCharsets.UTF_8);
+            writer.println("Testing Servlet 6.1 API");
+            writer.println("ServletContext.getMajorVersion: " + ctx.getMajorVersion());
+            writer.println("ServletContext.getMinorVersion: " + ctx.getMinorVersion());
+            writer.println("RequestClass: " + request.getClass().getName());
+            writer.println("ServletJarLocation: " + HttpServletRequest.class.getProtectionDomain().getCodeSource().getLocation().toString());
+            writer.flush();
+            try
+            {
+                String message = "Successfully used 6.1+ API to set req charset.\n";
+                outputStream.write(ByteBuffer.wrap(message.getBytes(StandardCharsets.UTF_8)));
+                outputStream.flush();
+            }
+            catch (Throwable t)
+            {
+                t.printStackTrace(writer);
+            }
+            writer.flush();
+        }
+    }
+
     @Data
     @AllArgsConstructor(staticName = "of")
     public static class AliensResponse {
