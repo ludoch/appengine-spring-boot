@@ -41,6 +41,8 @@
       <li><a href="/appengine_apis">/appengine_apis which shows an advanced selection of usage for AppEngine APIs.</a></li>
       <li><a href="/aliens">/aliens</a></li>
       <li><a href="/admin">/admin</a></li>
+      <li><a href="/stacktrace">Print Stacktrace</a></li>
+      <li><a href="/ee11Test">Test Servlet 6.1 API</a></li>
       <li><a href="/actuator/metrics">actuator/metrics</a></li>
       <li><a href="actuator/metrics/jvm.memory.max">actuator/metrics/jvm.memory.max</a></li>
       <li><a href="actuator/health">actuator/health</a></li>

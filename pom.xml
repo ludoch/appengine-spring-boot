@@ -133,28 +133,6 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-websocket</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.eclipse.jetty.ee11.websocket</groupId>
-                    <artifactId>jetty-ee11-websocket-jakarta-client</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.eclipse.jetty.ee11.websocket</groupId>
-                    <artifactId>jetty-ee11-websocket-jakarta-server</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.eclipse.jetty.ee11.websocket</groupId>
-                    <artifactId>jetty-ee11-websocket-jetty-server</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -231,10 +209,11 @@
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <build>
-
+        <finalName>appengine-spring-boot</finalName>
         <plugins>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
