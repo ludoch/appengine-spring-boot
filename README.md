@@ -2,10 +2,10 @@
 
 Sample Google App Engine (standard) application using :
 
- * Java 25 : 
- * Spring Boot 4.0.0.M2 : the application is packaged as an executable WAR also deployable on servlet containers
+ * AppEngine Java 25 preview, WAR based deployment to use GAE APIs. 
+ * Spring Boot 4.0.0.RC1 : the application is packaged as an executable WAR also deployable on servlet containers
  * Jetty12.1 EE11 SpringBoot configuration instead of default Tomcat. This way it reuses the Jetty 12.1 provided in AppEngine.
- * Latest AppEngine artifacts for Java 21 runtime
+ * Latest AppEngine artifacts for Java 25 runtime
  * JSP : just to prove it works, you should probably use another template engine like thymeleaf
 
 ## How to test locally
@@ -40,14 +40,23 @@ If you only have one environment, you can set these properties directly in `pom.
 
 ## What's in there
 
-The home page is simple, it just proves Java 21 GAE + Spring Boot + GAE APIs (datastore) +JSPs work 
+The home page is simple, it just proves Java 25 GAE + Spring Boot + GAE APIs (datastore) + JSPs work 
 
 You can also hit `/aliens` to see a  HTTP  example using AppEngine Datastore APIs.
 
 You can also curl the hell out of the actuator endpoints :
 
- * Health : `curl -i "https://your_appengine_application_id.appspot.com/health`
- * Sensitive endpoints (credentials in `application.yml`) : `curl -i "https://your_appengine_application_id.appspot.com/env --user "administrator:M4rSuP1aL-EsTh3T1qUE"` 
+ * Health : 
+
+```
+curl -i "https://your_appengine_application_id.appspot.com/health
+````
+
+ * Sensitive endpoints (credentials in `application.yml`) : 
+
+```
+curl -i "https://your_appengine_application_id.appspot.com/env --user "administrator:M4rSuP1aL-EsTh3T1qUE"
+``` 
 
 ## Notes / known issues
 
