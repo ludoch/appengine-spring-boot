@@ -111,7 +111,6 @@ import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 import javax.management.MBeanServer;
 import javax.swing.JEditorPane;
-
 /**
  * Servlet capable of performing a variety of AppEngine actions based on the
  * value of the query parameters.

@@ -5,7 +5,7 @@ spring:
   jackson:
     serialization:
       indent_output: true
-      write-dates-as-timestamps: false
+      #write-dates-as-timestamps: false
   mvc:
     # In order to use JSPs
     view:
