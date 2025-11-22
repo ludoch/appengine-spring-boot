@@ -3,7 +3,7 @@
 Sample Google App Engine (standard) application using :
 
  * AppEngine Java 25 preview, WAR based deployment to use GAE APIs. 
- * Spring Boot 4.0.0.RC1 : the application is packaged as an executable WAR also deployable on servlet containers
+ * Spring Boot 4.0.0 : the application is packaged as an executable WAR also deployable on servlet containers
  * Jetty12.1 EE11 SpringBoot configuration instead of default Tomcat. This way it reuses the Jetty 12.1 provided in AppEngine.
  * Latest AppEngine artifacts for Java 25 runtime
  * JSP : just to prove it works, you should probably use another template engine like thymeleaf
@@ -17,7 +17,7 @@ mvn clean package appengine:run
 This command above will start the local devappserver and you can see the home page: http://localhost:8080/ that will display these links to test:
 
 ```
-Sample Spring Boot Application running as an App Engine Java21 Web App.!
+Sample Spring Boot Application running as an App Engine Java25 Web App.!
 This is the index.jsp. Try also the following urls:
 /aliens
 /admin
@@ -40,7 +40,7 @@ If you only have one environment, you can set these properties directly in `pom.
 
 ## What's in there
 
-The home page is simple, it just proves Java 25 GAE + Spring Boot + GAE APIs (datastore) + JSPs work 
+The home page is simple, it just proves Java 25 GAE + Spring Boot 4.0 + GAE APIs (datastore) + JSPs work 
 
 You can also hit `/aliens` to see a  HTTP  example using AppEngine Datastore APIs.
 
