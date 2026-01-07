@@ -18,6 +18,7 @@ package com.github.michaeltecourt.appengine.server;
 import static java.nio.charset.StandardCharsets.US_ASCII;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+//import org.apache.taglibs.standard.tlv.JstlCoreTLV;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -206,7 +207,7 @@ public class AppEngineAllInOneServlet extends HttpServlet {
 
     private static void performDefaultpage(PrintWriter w) {
         //   appengine_apis?jmlx_list_vm_options
-        w.printf("<h1>Sample Spring Boot Servlet using AppEngine Java APIs on java21</h1>");
+        w.printf("<h1>Sample Spring Boot Servlet using AppEngine Java APIs on java25</h1>");
         w.printf("<a href=\"%s\">%s</a>",
                 "https://github.com/ludoch/appengine-spring-boot/blob/master/src/main/java/com/github/michaeltecourt/appengine/server/AppEngineAllInOneServlet.java",
                 "this Servlet source code.");

@@ -41,7 +41,7 @@
     <properties>
         <java.version>25</java.version>
         <maven.compiler.proc>full</maven.compiler.proc>
-        <appengine.sdk.version>3.0.2</appengine.sdk.version>
+        <appengine.sdk.version>4.0.0</appengine.sdk.version>
         <maven.compiler.release>25</maven.compiler.release>
     </properties>
 
@@ -201,6 +201,14 @@
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
         </dependency>
     </dependencies>
     <build>
