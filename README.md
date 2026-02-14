@@ -2,8 +2,8 @@
 
 Sample Google App Engine (standard) application using :
 
- * AppEngine Java 25 preview, WAR based deployment to use GAE APIs. 
- * Spring Boot 4.0.0 : the application is packaged as an executable WAR also deployable on servlet containers
+ * AppEngine Java 25, WAR based deployment to use GAE APIs. 
+ * Spring Boot 4.0.1 : the application is packaged as an executable WAR also deployable on servlet containers
  * Jetty12.1 EE11 SpringBoot configuration instead of default Tomcat. This way it reuses the Jetty 12.1 provided in AppEngine.
  * Latest AppEngine artifacts for Java 25 runtime
  * JSP : just to prove it works, you should probably use another template engine like thymeleaf
