@@ -220,18 +220,24 @@ public class AppEngineAllInOneServlet extends HttpServlet {
             // Customize the link generation here per entry
             String href = "appengine_apis?" + linkName; // Basic case, customize as needed
             String displayName = "/" + linkName; // Basic case, customize as needed
-
-            if (linkName.equals("datastore_entities")) {
-                href = "appengine_apis?" + linkName + "=3";
-                displayName = "datastore_entities: adding 3 items in GAE Datastore";
-            } else if (linkName.equals("memcache_loops")) {
-                href = "appengine_apis?" + linkName + "=10&memcache_size=10";
-                displayName = "memcache_loops: adding 10 items in memcache";
-            } else if (linkName.equals("add_tasks")) {
-                href = "appengine_apis?" + linkName + "=1&task_url=/appengine_apis?datastore_entities=7";
-                displayName = "add_tasks: adding 1 GAE taskqueue for /appengine_apis?datastore_entities=7 so adding 7 entities in a taskqueue";
-            } else if (linkName.equals("datastore_count")) {
-                displayName = "datastore_count: Getting the count of entities in GAE Datastore";
+            switch (linkName) {
+                case "datastore_entities":
+                    href = "appengine_apis?" + linkName + "=3";
+                    displayName = "datastore_entities: adding 3 items in GAE Datastore";
+                    break;
+                case "memcache_loops":
+                    href = "appengine_apis?" + linkName + "=10&memcache_size=10";
+                    displayName = "memcache_loops: adding 10 items in memcache";
+                    break;
+                case "add_tasks":
+                    href = "appengine_apis?" + linkName + "=1&task_url=/appengine_apis?datastore_entities=7";
+                    displayName = "add_tasks: adding 1 GAE taskqueue for /appengine_apis?datastore_entities=7 so adding 7 entities in a taskqueue";
+                    break;
+                case "datastore_count":
+                    displayName = "datastore_count: Getting the count of entities in GAE Datastore";
+                    break;
+                default:
+                    break;
             }
 
             w.printf("<li><a href=\"%s\">%s</a></li>\n", href, displayName);
@@ -467,13 +473,8 @@ public class AppEngineAllInOneServlet extends HttpServlet {
      */
     private void performMathMs(int ms, PrintWriter w) {
         emitf(w, "Burning cpu for %d ms", ms);
-        runRepeatedly(
-                ms,
-                new Runnable() {
-            @Override
-            public void run() {
-                performMath(random.nextBoolean());
-            }
+        runRepeatedly(ms, () -> {
+            performMath(random.nextBoolean());
         });
         logger.info("Cpu burned");
     }
@@ -600,7 +601,7 @@ public class AppEngineAllInOneServlet extends HttpServlet {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         for (int i = 0; i < count; ++i) {
             Query query = new Query(CAR_KIND);
-            Filter filter = null;
+            Filter filter;
             if (random.nextBoolean()) {
                 filter
                         = new Query.FilterPredicate(
@@ -1204,7 +1205,7 @@ public class AppEngineAllInOneServlet extends HttpServlet {
         String value = req.getParameter(name);
         if (value != null) {
             try {
-                return Integer.parseInt(value);
+                return Integer.valueOf(value);
             } catch (NumberFormatException e) {
                 throw new ServletException("parameter " + name + " has invalid integer.");
             }

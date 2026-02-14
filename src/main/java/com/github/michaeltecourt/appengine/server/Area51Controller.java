@@ -30,6 +30,7 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotEmpty;
+import java.io.IOException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -122,7 +123,7 @@ public class Area51Controller {
                 outputStream.write(ByteBuffer.wrap(message.getBytes(StandardCharsets.UTF_8)));
                 outputStream.flush();
             }
-            catch (Throwable t)
+            catch (IOException t)
             {
                 t.printStackTrace(writer);
             }
