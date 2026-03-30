@@ -15,84 +15,69 @@
  */
 package com.github.michaeltecourt.appengine.server;
 
-import java.io.PrintWriter;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.security.Principal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 import com.google.appengine.api.datastore.DatastoreService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotEmpty;
-import java.io.IOException;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.security.Principal;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * Modernized Controller using Java 25 Records.
+ */
 @Controller
-@Slf4j
 public class Area51Controller {
 
-    /** Do something with the app engine datastore... */
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Area51Controller.class);
+
     private final DatastoreService datastoreService;
 
-    @Autowired
     public Area51Controller(DatastoreService datastoreService) {
         this.datastoreService = Objects.requireNonNull(datastoreService);
     }
 
-    /**
-     * Home page -> {@literal /WEB-INF/jsp/index.jsp}
-     * 
-     * @return home page view.
-     */
     @RequestMapping("/")
     public ModelAndView home() {
-        LOGGER.info("Loading home page...");
+        log.info("Loading home page...");
         return new ModelAndView("index");
     }
 
-    /**
-     * Sample JSON/HTTP service.
-     * 
-     * @return a list of aliens.
-     */
     @RequestMapping(value = "/aliens", method = RequestMethod.GET)
     @ResponseBody
     public AliensResponse aliens() {
-        LOGGER.info("Returning a static list of aliens...");
-        return AliensResponse.of(Arrays.asList(Alien.of("E.T.", "Home"), Alien.of("Marvin the Martian", "Mars")));
+        log.info("Returning a static list of aliens...");
+        return new AliensResponse(List.of(new Alien("E.T.", "Home"), new Alien("Marvin the Martian", "Mars")));
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     @ResponseBody
     public AliensResponse admin(HttpServletRequest request) {
-        LOGGER.info("Returning the admin info...");
+        log.info("Returning the admin info...");
         Principal userPrincipal = request.getUserPrincipal();
-        return AliensResponse.of(
-            Collections.singletonList(Alien.of("userPrincipal", userPrincipal == null ? "null" : userPrincipal.toString()))
+        return new AliensResponse(
+            Collections.singletonList(new Alien("userPrincipal", userPrincipal == null ? "null" : userPrincipal.toString()))
         );
     }
 
     @RequestMapping(value = "/stacktrace", method = RequestMethod.GET)
     public void stacktrace(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        LOGGER.info("Printing the stacktrace...");
+        log.info("Printing the stacktrace...");
         response.setContentType("text/plain");
         try (PrintWriter writer = response.getWriter())
         {
@@ -104,7 +89,7 @@ public class Area51Controller {
     @RequestMapping(value = "/ee11Test", method = RequestMethod.GET)
     public void ee11Test(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        LOGGER.info("Testing Servlet 6.1 API...");
+        log.info("Testing Servlet 6.1 API...");
         response.setContentType("text/plain");
         ServletContext ctx = request.getServletContext();
 
@@ -131,24 +116,8 @@ public class Area51Controller {
         }
     }
 
-    @Data
-    @AllArgsConstructor(staticName = "of")
-    public static class AliensResponse {
-        @NonNull
-        private final List<Alien> aliens;
-    }
+    public record AliensResponse(@NonNull List<Alien> aliens) {}
 
-    @Data
-    @AllArgsConstructor(staticName = "of")
-    // Only used by Jackson through reflection
-    @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-    public static class Alien {
-        @NonNull
-        @NotEmpty
-        private final String name;
-        @NonNull
-        @NotEmpty
-        private final String home;
-    }
+    public record Alien(@NonNull @NotEmpty String name, @NonNull @NotEmpty String home) {}
 
 }

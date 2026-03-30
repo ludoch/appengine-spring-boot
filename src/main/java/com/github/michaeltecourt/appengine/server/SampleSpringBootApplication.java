@@ -20,15 +20,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
- * Spring Boot application entry point. Because it extends
- * {@link SpringBootServletInitializer} it will be detected without a web.xml
- * file.
+ * Main application class.
  * 
  * @author michaeltecourt
  */
 @SpringBootApplication
-public class SampleSpringBootApplication extends SpringBootServletInitializer
-{
+public class SampleSpringBootApplication extends SpringBootServletInitializer {
+
+    /**
+     * Start the Spring Boot application.
+     * 
+     * @param args command-line arguments.
+     */
     public static void main(String[] args) {
         // This main method is not used by Google App Engine, which only needs
         // an empty @SpringBootApplication class from SpringBootServletInitializer.

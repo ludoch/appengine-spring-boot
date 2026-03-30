@@ -15,64 +15,103 @@
  */
 package com.github.michaeltecourt.appengine.server;
 
-import java.net.URI;
-
-import org.assertj.core.api.Assertions;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.google.appengine.tools.development.testing.LocalMemcacheServiceTestConfig;
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.google.appengine.tools.development.testing.LocalUserServiceTestConfig;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
-//import org.springframework.boot.web.servlet.server.AbstractServletWebServerFactory;
-//import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-//import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringRunner; 
-import io.restassured.RestAssured;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.security.test.context.support.WithMockUser;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.hamcrest.Matchers.containsString;
 
 /**
- * Spring Boot "component test", launching the application in memory on a random
- * port using an embedded Jetty server. Definitely <strong>NOT</strong> the same
- * as the actual app engine runtime, can still tell you whether your Spring
- * Context is alright or not.
- * 
- * @author michaeltecourt
+ * Modernized Spring Boot test using JUnit 5 and manual MockMvc setup with Security.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = SampleSpringBootApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
-public class SampleSpringBootApplicationTest {
+@SpringBootTest
+class SampleSpringBootApplicationTest {
 
-    @Value("http://localhost:${local.server.port}${server.contextPath:}/aliens")
-    URI aliensUri;
+    private final LocalServiceTestHelper helper =
+        new LocalServiceTestHelper(
+            new LocalUserServiceTestConfig(),
+            new LocalMemcacheServiceTestConfig()
+        );
 
-//    @Autowired
-//    private AbstractServletWebServerFactory container;
+    private MockMvc mockMvc;
 
-    @Test
-    public void applicationShouldStartWithEmbeddedJetty() {
-   //     Assertions.assertThat(container).isInstanceOf(JettyServletWebServerFactory.class);
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @BeforeEach
+    void setup() {
+        helper.setUp();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext)
+            .apply(springSecurity())
+            .build();
     }
 
-    /**
-     * Test the actual {@literal /aliens} service with an HTTP GET and make
-     * assertions on the JSON response.
-     */
-    @Test
-    public void aliens() {
-        // @formatter:off
-        RestAssured
-            .given()
-            .when()
-                .get(aliensUri)
-            .then()
-                .statusCode(200)
-                .body("aliens[0].name", Matchers.is("E.T."))
-                .body("aliens[0].home", Matchers.is("Home"))
-                .body("aliens[1].name", Matchers.is("Marvin the Martian"))
-                .body("aliens[1].home", Matchers.is("Mars"));
-        // @formatter:on
+    @AfterEach
+    void tearDown() {
+        helper.tearDown();
     }
 
+    @Test
+    void aliens() throws Exception {
+        mockMvc.perform(get("/aliens"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.aliens[0].name").value("E.T."))
+            .andExpect(jsonPath("$.aliens[0].home").value("Home"))
+            .andExpect(jsonPath("$.aliens[1].name").value("Marvin the Martian"))
+            .andExpect(jsonPath("$.aliens[1].home").value("Mars"));
+    }
+
+    @Test
+    void gaeStatus() throws Exception {
+        mockMvc.perform(get("/api/gae/status"))
+            .andExpect(status().isOk())
+            .andExpect(content().string("GAE APIs Integrated Successfully with Spring Boot 4.0.x on Virtual Threads"));
+    }
+
+    @Test
+    void unauthenticatedAccessRedirectsToLogin() throws Exception {
+        // Accessing a secured endpoint without a session should redirect to GAE Login
+        mockMvc.perform(post("/api/gae/datastore/entities"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(header().string("Location", containsString("/_ah/login")));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void secureEndpointAllowedWithUser() throws Exception {
+        mockMvc.perform(post("/api/gae/datastore/entities"))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void adminEndpointForbiddenForUser() throws Exception {
+        // Authenticated but wrong role -> 403 Forbidden
+        mockMvc.perform(post("/api/gae/tasks/deferred").param("payload", "test"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void adminEndpointAllowedForAdmin() throws Exception {
+        mockMvc.perform(post("/api/gae/tasks/deferred").param("payload", "test"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.status").value("deferred"));
+    }
 }

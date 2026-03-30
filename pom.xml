@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.0.3</version>
     </parent>
 
     <groupId>com.github.michaeltecourt</groupId>
@@ -16,106 +16,35 @@
     <packaging>war</packaging>
     <inceptionYear>2017</inceptionYear>
 
-    <licenses>
-        <license>
-            <name>The Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>Michael Tecourt</name>
-            <email>michael.tecourt@gmail.com</email>
-            <url>https://github.com/michaeltecourt</url>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git:git://github.com/michaeltecourt/appengine-spring-boot.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/michaeltecourt/appengine-spring-boot.git</developerConnection>
-        <url>http://github.com/michaeltecourt/appengine-spring-boot/tree/master</url>
-        <tag>HEAD</tag>
-    </scm>
-
     <properties>
         <java.version>25</java.version>
-        <maven.compiler.proc>full</maven.compiler.proc>
-        <appengine.sdk.version>4.0.2</appengine.sdk.version>
+        <appengine.sdk.version>5.0.0</appengine.sdk.version>
         <maven.compiler.release>25</maven.compiler.release>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- AppEngine runtime -->
-            <dependency>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-api-1.0-sdk</artifactId>
-                <version>${appengine.sdk.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.appengine.api.memcache.jsr107cache</groupId>
-                <artifactId>appengine-jsr107</artifactId>
-                <version>${appengine.sdk.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.sf.jsr107cache</groupId>
-                <artifactId>jsr107cache</artifactId>
-                <version>1.1</version>
-            </dependency>
-            <!-- Web -->
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>bootstrap</artifactId>
-                <version>5.3.8</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jquery</artifactId>
-                <version>3.7.1</version>
-            </dependency>
-            <!-- MISC -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>33.5.0-jre</version>
-            </dependency>
-            <!-- Testing -->
-            <dependency>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-testing</artifactId>
-                <version>${appengine.sdk.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-api-stubs</artifactId>
-                <version>${appengine.sdk.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.rest-assured</groupId>
-                <artifactId>rest-assured</artifactId>
-                <version>6.0.0</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <!-- App Engine runtime -->
         <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>${appengine.sdk.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.appengine.api.memcache.jsr107cache</groupId>
             <artifactId>appengine-jsr107</artifactId>
+            <version>${appengine.sdk.version}</version>
         </dependency>
         <dependency>
             <groupId>net.sf.jsr107cache</groupId>
             <artifactId>jsr107cache</artifactId>
+            <version>1.1</version>
         </dependency>
-        <!-- Spring -->
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+        </dependency>
+
+        <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -134,69 +63,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <!-- Web -->
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>0.52</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-        </dependency>
-        <!-- MISC -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.code.findbugs</groupId>
-                    <artifactId>jsr305</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- Testing -->
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-testing</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-stubs</artifactId>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-jcl</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
+
+        <!-- Web dependencies -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -210,7 +86,73 @@
             <groupId>org.glassfish.web</groupId>
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>0.52</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>5.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.7.1</version>
+        </dependency>
+
+        <!-- MISC -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.5.0-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-testing</artifactId>
+            <version>${appengine.sdk.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-stubs</artifactId>
+            <version>${appengine.sdk.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
     <build>
         <finalName>appengine-spring-boot</finalName>
         <plugins>
@@ -223,10 +165,8 @@
                     <version>springgaejetty121java25</version>
                     <!--automaticRestart>true</automaticRestart-->
                     <promote>false</promote>
-                    
                 </configuration>
             </plugin>
-            <!-- Spring Boot fat war -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -241,23 +181,19 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- App Engine plugin -->
             <plugin>
                 <groupId>org.eclipse.jetty.ee11</groupId>
                 <artifactId>jetty-ee11-jspc-maven-plugin</artifactId>
-                <version>12.1.4</version>
+                <version>12.1.6</version>
                 <executions>
                     <execution>
                         <id>jspc</id>
                         <goals>
                             <goal>jspc</goal>
                         </goals>
-                        <configuration>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
 </project>

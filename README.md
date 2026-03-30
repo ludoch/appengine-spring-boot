@@ -1,63 +1,92 @@
-# appengine-spring-boot
+# 🚀 App Engine + Spring Boot 4.0.x: The Modernization Blueprint
 
-Sample Google App Engine (standard) application using :
+[![Java 25](https://img.shields.io/badge/Java-25-blue.svg)](https://openjdk.org/projects/jdk/25/)
+[![Spring Boot 4.0.3](https://img.shields.io/badge/Spring%20Boot-4.0.3-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![App Engine](https://img.shields.io/badge/App%20Engine-Standard-orange.svg)](https://cloud.google.com/appengine)
 
- * AppEngine Java 25, WAR based deployment to use GAE APIs. 
- * Spring Boot 4.0.1 : the application is packaged as an executable WAR also deployable on servlet containers
- * Jetty12.1 EE11 SpringBoot configuration instead of default Tomcat. This way it reuses the Jetty 12.1 provided in AppEngine.
- * Latest AppEngine artifacts for Java 25 runtime
- * JSP : just to prove it works, you should probably use another template engine like thymeleaf
+This project is a **best-in-class reference architecture** for running modern Spring Boot applications on Google App Engine (Standard) while leveraging high-performance Java 25 features and GAE Legacy APIs.
 
-## How to test locally
+---
 
- ```
+## 🌟 Why This Matters
+Transitioning legacy GAE apps to modern Java runtimes often feels like a trade-off. This sample proves you can have it all: **Jakarta EE 11 compatibility**, **Virtual Threads for scale**, and **seamless Google Cloud integration** without the boilerplate of legacy XML configurations.
+
+## 🛠 Pro-Grade Modernizations
+
+### 🏎 High Performance & Caching
+*   **Virtual Threads (Loom)**: Pre-configured to handle massive concurrency for blocking GAE API calls (Datastore, URLFetch) without thread pool exhaustion.
+*   **Spring Cache (@Cacheable)**: Seamlessly integrated with **GAE Memcache** via JSR-107.
+*   **Warmup Handling**: Implements `/_ah/warmup` to prime the Spring context and caches.
+
+### 🔐 Modern Security (Goodbye `web.xml`)
+*   **GAE + Spring Security 7.x**: Bridges Google Accounts directly to Spring roles.
+*   **Automatic Role Mapping**: Google Project Admins are automatically mapped to `ROLE_ADMIN`.
+*   **Annotation-Driven**: Use standard `@PreAuthorize` instead of legacy XML security constraints.
+
+### 📊 Observability & Monitoring
+*   **Custom Health Indicators**: Deep monitoring of Datastore and Memcache via `/actuator/health`.
+*   **GAE Metrics in Actuator**: Real-time GAE statistics exposed via Micrometer.
+*   **Unified Logging**: GAE system logs (JUL) are bridged into SLF4J/Logback.
+*   **OpenAPI 3 / Swagger**: Auto-generated documentation and interactive UI at `/swagger-ui.html`.
+
+---
+
+## 🚀 How to test locally
+
+```bash
 mvn clean package appengine:run
 ```
 
-This command above will start the local devappserver and you can see the home page: http://localhost:8080/ that will display these links to test:
+Once started, visit `http://localhost:8080/` to see the home page. Try the following URLs:
 
+### Sample Application Links
+*   **Home (JSP)**: `http://localhost:8080/`
+*   **Aliens (JSON)**: `http://localhost:8080/aliens`
+*   **Admin Info**: `http://localhost:8080/admin` (Requires `ROLE_ADMIN` / GAE Admin)
+*   **GAE API Status**: `http://localhost:8080/api/gae/status`
+*   **Swagger UI**: `http://localhost:8080/swagger-ui.html`
+
+### Actuator Endpoints (Monitoring)
+*   **Health**: `http://localhost:8080/actuator/health`
+*   **Metrics**: `http://localhost:8080/actuator/metrics`
+*   **Environment**: `http://localhost:8080/actuator/env`
+*   **Beans**: `http://localhost:8080/actuator/beans`
+*   **Thread Dump**: `http://localhost:8080/actuator/threaddump`
+*   **Loggers**: `http://localhost:8080/actuator/loggers`
+
+---
+
+## 🏗 Modernized Architecture
+
+### Injecting GAE Services
+No more static factories. Inject GAE services as standard Spring Beans:
+```java
+@RestController
+public class MyController {
+    private final DatastoreService datastore; // Auto-wired from AppEngineConfig
+}
 ```
-Sample Spring Boot Application running as an App Engine Java25 Web App.!
-This is the index.jsp. Try also the following urls:
-/aliens
-/admin
-/actuator/metrics
-/actuator/metrics/jvm.memory.max
-/actuator/health
-/actuator/env
-/actuator/threaddump
-/actuator/loggers
-/actuator/beans
-/actuator/health
+
+### Role-Based Access Control
+Leverage standard Spring Security annotations to protect your GAE application:
+```java
+@PostMapping("/admin-only")
+@PreAuthorize("hasRole('ADMIN')")
+public String adminAction() {
+    return "Only Google App Engine Admins can see this!";
+}
 ```
 
-## How to deploy
+---
 
-To deploy on App Engine, run `mvn appengine:update -Dappengine.app.id=your_appengine_application_id`.  
-You can also add `-Dappengine.app.version=X` to override the default version (1).
-
-If you only have one environment, you can set these properties directly in `pom.xml` or `appengine-web.xml`.
-
-## What's in there
-
-The home page is simple, it just proves Java 25 GAE + Spring Boot 4.0 + GAE APIs (datastore) + JSPs work 
-
-You can also hit `/aliens` to see a  HTTP  example using AppEngine Datastore APIs.
-
-You can also curl the hell out of the actuator endpoints :
-
- * Health : 
-
+## 📦 Deployment
+```bash
+mvn appengine:deploy
 ```
-curl -i "https://your_appengine_application_id.appspot.com/health
-````
 
- * Sensitive endpoints (credentials in `application.yml`) : 
-
-```
-curl -i "https://your_appengine_application_id.appspot.com/env --user "administrator:M4rSuP1aL-EsTh3T1qUE"
-``` 
-
-## Notes / known issues
-
- * If you want to  add global security constraints using the App Engine user APIs, you still need a `web.xml`
+## 🧪 Technical Stack
+*   **Runtime**: App Engine Standard (Java 25)
+*   **Framework**: Spring Boot 4.0.3 (Jakarta EE 11)
+*   **Caching**: JSR-107 / GAE Memcache
+*   **Web Server**: Jetty 12.1
+*   **Testing**: JUnit 5 + MockMvc + GAE LocalServiceTestHelper

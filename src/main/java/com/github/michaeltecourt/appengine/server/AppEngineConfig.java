@@ -15,20 +15,31 @@
  */
 package com.github.michaeltecourt.appengine.server;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-
 /**
- * Declare App Engine services as Spring beans to inject them around.
- * 
- * @author michaeltecourt
+ * Declares App Engine services as Spring beans and bridges JUL logs.
  */
 @Configuration
 public class AppEngineConfig {
+
+    static {
+        // Bridge GAE System Logs (JUL) to SLF4J
+        org.slf4j.bridge.SLF4JBridgeHandler.removeHandlersForRootLogger();
+        org.slf4j.bridge.SLF4JBridgeHandler.install();
+    }
 
     @Bean
     @ConditionalOnMissingBean
@@ -36,4 +47,27 @@ public class AppEngineConfig {
         return DatastoreServiceFactory.getDatastoreService();
     }
 
+    @Bean
+    @ConditionalOnMissingBean
+    public UserService userService() {
+        return UserServiceFactory.getUserService();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public MemcacheService memcacheService() {
+        return MemcacheServiceFactory.getMemcacheService();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public URLFetchService urlFetchService() {
+        return URLFetchServiceFactory.getURLFetchService();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public Queue defaultQueue() {
+        return QueueFactory.getDefaultQueue();
+    }
 }
